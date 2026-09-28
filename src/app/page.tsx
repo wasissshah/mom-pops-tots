@@ -1,69 +1,53 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import SiteHeader from "@/components/layout/SiteHeader";
+import SiteFooter from "@/components/layout/SiteFooter";
+import Hero from "@/components/home/Hero";
+import Advertising from "@/components/home/Advertising";
+import TribeSection from "@/components/home/TribeSection";
+import EventsSection from "@/components/home/EventsSection";
+import Magazine from "@/components/home/Magazine";
+import Offers from "@/components/home/Offers";
+import Community from "@/components/home/Community";
+import Directory from "@/components/home/Directory";
+import Recommendations from "@/components/home/Recommendations";
+import Podcasts from "@/components/home/Podcasts";
+import Vote from "@/components/home/Vote";
+import Knowledge from "@/components/home/Knowledge";
+import Tools from "@/components/home/Tools";
+import SocialFeed from "@/components/home/SocialFeed";
+import Connect from "@/components/home/Connect";
+import { tribeItems } from "@/data/home";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      <SiteHeader />
+      <main>
+        <Hero />
+        <Advertising />
+        <TribeSection
+          items={tribeItems}
+          doodles={[
+            { src: "/assets/images/bird.svg", className: "tribe__doodle--bird" },
+            { src: "/assets/images/camera.svg", className: "tribe__doodle--camera" },
+            { src: "/assets/images/rocket.svg", className: "tribe__doodle--rocket" },
+            { src: "/assets/images/bulb.svg", className: "tribe__doodle--bulb" },
+          ]}
         />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        <EventsSection />
+        <Magazine />
+        <Offers />
+        <Community />
+        <Directory />
+        <Recommendations />
+        <Podcasts />
+        <Vote />
+        <Advertising withDoodle />
+        <Knowledge />
+        <Tools />
+        <SocialFeed />
+        <Connect />
       </main>
-    </div>
+      <SiteFooter />
+    </>
   );
 }
