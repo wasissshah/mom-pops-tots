@@ -4,17 +4,25 @@ import { useEffect, useRef, type SelectHTMLAttributes } from "react";
 
 type Select2Props = SelectHTMLAttributes<HTMLSelectElement> & {
   dropdownCssClass?: string;
+  /** Called with the new value when the user picks an option (select2 fires jQuery events, not React onChange). */
+  onValueChange?: (value: string) => void;
 };
 
 type Select2Window = Window & { jQuery?: unknown; $?: unknown };
 
 export default function Select2({
   dropdownCssClass = "select2-brand",
+  onValueChange,
   className,
   children,
   ...rest
 }: Select2Props) {
   const ref = useRef<HTMLSelectElement>(null);
+  const onValueChangeRef = useRef(onValueChange);
+
+  useEffect(() => {
+    onValueChangeRef.current = onValueChange;
+  }, [onValueChange]);
 
   useEffect(() => {
     let cancelled = false;
@@ -46,11 +54,15 @@ export default function Select2({
         selectionCssClass: ":all:",
         dropdownCssClass,
       });
+      $el.on("change.mptValue", (e: { target: HTMLSelectElement }) => onValueChangeRef.current?.(e.target.value));
     })();
 
     return () => {
       cancelled = true;
-      if ($el) $el.select2("destroy");
+      if ($el) {
+        $el.off("change.mptValue");
+        $el.select2("destroy");
+      }
     };
   }, [dropdownCssClass, className]);
 

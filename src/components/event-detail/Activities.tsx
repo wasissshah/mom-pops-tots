@@ -1,27 +1,30 @@
-import { activities } from "@/data/eventDetail";
+import type { EventDetail } from "@/api/eventDetail";
+import { formatDayLabel, formatDuration, formatTimeRange } from "@/lib/eventDate";
 
-export default function Activities() {
+// Built from the event's `dates` array: one slot per session date.
+// The API has no instructor / per-slot capacity, so those parts are not shown.
+export default function Activities({ event }: { event: EventDetail }) {
+  if (event.dates.length === 0) return null;
+  const duration = formatDuration(event.dates[0].start, event.dates[0].end);
+
   return (
     <section className="event-detail__block">
       <div className="text-center"><h2 className="section-title section-title--center">Activities</h2></div>
-      {activities.map((activity, i) => (
-        <div key={activity.title}>
-          <div className="activity">
-            <h3 className="activity__title">{activity.title}</h3>
-            <p className="activity__text">{activity.text}</p>
-            <p className="activity__meta">Instructor: <strong>{activity.instructor}</strong> Duration: <strong>{activity.duration}</strong></p>
-            <span className="activity__label">Available Slots</span>
-            <div className="row g-2">
-              {activity.slots.map((slot) => (
-                <div className="col-4" key={slot.time}>
-                  <span className={`slot${slot.full ? " slot--full" : ""}`}>{slot.time}<small>{slot.note}</small></span>
-                </div>
-              ))}
+      <div className="activity">
+        <h3 className="activity__title">{event.title}</h3>
+        {event.excerpt && <p className="activity__text">{event.excerpt}</p>}
+        {duration && (
+          <p className="activity__meta">Duration: <strong>{duration}</strong></p>
+        )}
+        <span className="activity__label">Available Slots</span>
+        <div className="row g-2">
+          {event.dates.map((d) => (
+            <div className="col-4" key={`${d.date}-${d.start}`}>
+              <span className="slot">{formatTimeRange(d.start, d.end)}<small>{formatDayLabel(d.date)}</small></span>
             </div>
-          </div>
-          {i < activities.length - 1 && <hr className="divider-gradient" />}
+          ))}
         </div>
-      ))}
+      </div>
     </section>
   );
 }

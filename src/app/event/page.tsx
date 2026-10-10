@@ -1,6 +1,6 @@
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
-import PageBanner from "@/components/event/PageBanner";
+import FeaturedBanner from "@/components/event/FeaturedBanner";
 import FeaturedEvents from "@/components/event/FeaturedEvents";
 import EventCalendar from "@/components/event/EventCalendar";
 import TribeSection from "@/components/home/TribeSection";
@@ -14,7 +14,7 @@ export default function EventPage() {
     <>
       <SiteHeader />
       <main>
-        <PageBanner showBar />
+        <FeaturedBanner />
         <FeaturedEvents />
         <EventCalendar />
         <TribeSection

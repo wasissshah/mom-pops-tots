@@ -1,29 +1,24 @@
-export default function Sidebar() {
+import type { EventDetail } from "@/api/eventDetail";
+import { formatSession } from "@/lib/eventDate";
+
+export default function Sidebar({ event }: { event: EventDetail }) {
+  const { pricing, venue } = event;
   return (
     <aside className="event-detail__aside">
       <div className="info-card">
-        <span className="tag tag--green">Free to attend</span>
-        <p className="event-detail__spots">Only 18 spots left for Saturday</p>
-        <div className="progress" role="progressbar" aria-label="Spots filled" aria-valuenow={60} aria-valuemin={0} aria-valuemax={100}>
-          <div className="progress-bar" style={{ width: "60%" }} />
-        </div>
+        <span className={`tag${pricing.is_paid ? "" : " tag--green"}`}>{pricing.is_paid ? pricing.label : "Free to attend"}</span>
         <ul className="detail-list">
           <li>
             <img src="/assets/images/calendar2.svg" alt="" />
             <div>
-              <strong>Thu, Aug 21 - 2:00 PM to 5:00 PM</strong>
-              <strong>Fri, Aug 22 - 2:00 PM to 5:00 PM</strong>
-              <strong>Sat, Aug 23 - 2:00 PM to 5:00 PM</strong>
-              <small>Multiple sessions per day</small>
+              {event.dates.map((d) => (
+                <strong key={`${d.date}-${d.start}`}>{formatSession(d.date, d.start, d.end)}</strong>
+              ))}
             </div>
           </li>
           <li>
             <img src="/assets/images/map.svg" alt="" />
-            <div><strong>City Walk Library</strong><small>Manrat Al Saadiyat, Abu Dhabi</small></div>
-          </li>
-          <li>
-            <img src="/assets/images/age.svg" alt="" />
-            <div><strong>Ages 3+</strong><small>Family-friendly</small></div>
+            <div><strong>{venue.name}</strong><small>{venue.address}</small></div>
           </li>
         </ul>
         <a className="btn btn-primary w-100" href="#register">Register now</a>

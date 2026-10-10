@@ -3,7 +3,44 @@
 import { useRef, useState } from "react";
 import SlickSlider from "react-slick";
 import type { Settings } from "react-slick";
+import type { ReactNode } from "react";
 import { heroArticles, heroSlides } from "@/data/home";
+import { getHomeBanners, type HomeBanner } from "@/api/home";
+import { useApi } from "@/hooks/useApi";
+import HeroSkeleton from "@/components/skeletons/HeroSkeleton";
+
+type Slide = {
+  image: string;
+  video?: string;
+  eyebrow: ReactNode;
+  title: ReactNode;
+  text: ReactNode;
+  doodles: { src: string; className: string }[];
+  showCards: boolean;
+};
+
+// Highlight the last word of the API title, like the static design ("be <span>Inspired</span>")
+function renderTitle(title: string): ReactNode {
+  const words = title.trim().split(" ");
+  if (words.length < 2) return title;
+  const last = words.pop();
+  return [words.join(" ") + " ", <span key="sp">{last}</span>];
+}
+
+function bannerToSlide(banner: HomeBanner, i: number): Slide {
+  const fallback = heroSlides[i % heroSlides.length];
+  const isVideo = banner.media?.kind === "video";
+  return {
+    image: !isVideo && banner.media?.url ? banner.media.url : fallback.image,
+    video: isVideo ? banner.media?.url : undefined,
+    eyebrow: banner.subtitle ?? "",
+    title: renderTitle(banner.title),
+    text: banner.description ?? "",
+    // API doodles are null for now -> keep design doodles
+    doodles: fallback.doodles,
+    showCards: fallback.showCards,
+  };
+}
 
 const settings: Settings = {
   fade: true,
@@ -16,6 +53,12 @@ export default function Hero() {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const [tick, setTick] = useState(0);
+  const { data: banners, loading } = useApi(getHomeBanners, "Hero banners");
+
+  // API slides when loaded; on failure (error is logged by useApi) fall back to the static design
+  const slides: Slide[] = banners?.length ? banners.map(bannerToSlide) : (heroSlides as Slide[]);
+
+  if (loading) return <HeroSkeleton />;
 
   return (
     <section className="hero">
@@ -28,7 +71,7 @@ export default function Hero() {
             setTick((t) => t + 1);
           }}
         >
-          {heroSlides.map((slide, i) => (
+          {slides.map((slide, i) => (
             <div key={i}>
             <div
               className={`hero__slide${slide.video ? " hero__slide--video" : ""}`}
@@ -92,7 +135,7 @@ export default function Hero() {
         </button>
         <div className="hero__dots">
           <ul className="slick-dots">
-            {heroSlides.map((_, i) => (
+            {slides.map((_, i) => (
               <li key={i} className={i === current ? "slick-active" : ""}>
                 <button type="button" onClick={() => sliderRef.current?.slickGoTo(i)}>{i + 1}</button>
               </li>

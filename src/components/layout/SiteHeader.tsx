@@ -2,10 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { cities, drawerNavLinks, mainNavLinks } from "@/data/navigation";
+import { cities as staticCities, drawerNavLinks, mainNavLinks } from "@/data/navigation";
+import { getCities } from "@/api/cities";
+import { getLanguages } from "@/api/languages";
+import { useApi } from "@/hooks/useApi";
+import DropdownSkeleton from "@/components/skeletons/DropdownSkeleton";
 
 export default function SiteHeader() {
   const [city, setCity] = useState("Muscat");
+  const { data: cityData, loading: citiesLoading } = useApi(getCities, "Cities");
+  const { data: languageData, loading: languagesLoading } = useApi(getLanguages, "Languages");
+
+  // API lists when loaded; on failure (error is logged by useApi) fall back to the static lists
+  const cities = cityData?.length ? cityData.map((c) => c.name) : staticCities;
+  const [lang, setLang] = useState("EN");
+  const languages = languageData?.length ? languageData.map((l) => l.code.toUpperCase()) : ["EN", "AR"];
 
   return (
     <>
@@ -36,7 +47,7 @@ export default function SiteHeader() {
                     <span className="select-brand__label">{city}</span>
                   </button>
                   <ul className="dropdown-menu dropdown-menu-brand">
-                    {cities.map((c) => (
+                    {citiesLoading ? <DropdownSkeleton rows={5} /> : cities.map((c) => (
                       <li key={c}>
                         <a
                           className="dropdown-item"
@@ -87,11 +98,23 @@ export default function SiteHeader() {
                 <img src="/assets/images/cycle-icon.svg" alt="" width={19} height={22} />
               </button>
               <div className="dropdown divider-start d-none d-md-block">
-                <button className="icon-btn dropdown-toggle dropdown-toggle-brand" type="button" data-bs-toggle="dropdown" aria-expanded="false">EN</button>
-                <ul className="dropdown-menu dropdown-menu-brand dropdown-menu-end">
-                  <li><a className="dropdown-item" href="#">EN</a></li>
-                  <li><a className="dropdown-item" href="#">AR</a></li>
-                </ul>
+                <button className="icon-btn dropdown-toggle dropdown-toggle-brand" type="button" data-bs-toggle="dropdown" aria-expanded="false">{lang}</button>
+                  <ul className="dropdown-menu dropdown-menu-brand dropdown-menu-end">
+                    {languagesLoading ? <DropdownSkeleton rows={3} /> : languages.map((l) => (
+                      <li key={l}>
+                        <a
+                          className="dropdown-item"
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setLang(l);
+                          }}
+                        >
+                          {l}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
               </div>
             </div>
           </div>

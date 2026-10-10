@@ -2721,7 +2721,7 @@ main .event-calendar .calendar__panel h3 {
   font-weight: 700;
 }
 main .event-calendar .calendar__list {
-  max-height: 28.55rem;
+  max-height: 30.7rem;
   padding: 0.25rem 0.75rem 0.25rem 0.25rem;
   overflow-y: auto;
 }
@@ -2747,6 +2747,8 @@ main .event-calendar .calendar-event__thumb {
   position: relative;
   flex: none;
   width: 6.5rem;
+  height: 70px;
+  object-fit: cover;
 }
 main .event-calendar .calendar-event__thumb img {
   display: block;

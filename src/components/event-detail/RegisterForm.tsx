@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 import SafeInput from "@/components/ui/SafeInput";
 import { chooseDays } from "@/data/eventDetail";
 
-export default function RegisterForm() {
+export default function RegisterForm({ title }: { title?: string }) {
   const [children, setChildren] = useState([1, 2]);
 
   return (
@@ -12,7 +12,7 @@ export default function RegisterForm() {
       <div className="container">
         <div className="text-center">
           <span className="section-eyebrow d-block">Registration</span>
-          <h2 className="section-title section-title--center">Register for Kids fun day program</h2>
+          <h2 className="section-title section-title--center">Register for {title ?? "this event"}</h2>
         </div>
 
         <form className="register__form form-brand" onSubmit={(e) => e.preventDefault()}>
