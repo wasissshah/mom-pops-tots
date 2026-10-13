@@ -20,7 +20,7 @@ export default function EventDetailView({ id }: { id?: number }) {
     if (!id) return Promise.reject(new Error("Missing event id in the URL (?id=)"));
     return getEventDetail(id);
   }, [id]);
-  const { data: event, loading, error } = useApi(fetchDetail, `Event ${id ?? "?"}`);
+  const { data: event, loading, error } = useApi(fetchDetail, `Event ${id ?? "?"}`, { localized: false });
 
   if (loading) return <DetailSkeleton />;
 
@@ -57,7 +57,7 @@ export default function EventDetailView({ id }: { id?: number }) {
               <AboutEvent event={event} />
               <Activities event={event} />
               <LocationBlock event={event} />
-              <HostedBy />
+              <HostedBy event={event} />
             </div>
             <div className="col-lg-4">
               <Sidebar event={event} />
@@ -66,7 +66,7 @@ export default function EventDetailView({ id }: { id?: number }) {
         </div>
       </section>
 
-      <RegisterForm title={event.title} />
+      <RegisterForm event={event} />
     </>
   );
 }

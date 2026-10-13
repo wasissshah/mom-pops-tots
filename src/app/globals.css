@@ -136,3 +136,51 @@ main .event-calendar .fc .fc-daygrid-day-number {
 main .event-calendar .fc .fc-daygrid-day-frame {
   position: relative;
 }
+
+/* contact form: country code dropdown, styled like the other inputs */
+main .connect .form-select.phone-code {
+  flex: none;
+  width: 6.6rem;
+  padding: 0.5rem 1.6rem 0.5rem 0.6rem;
+  border: 1px solid rgba(83, 108, 153, 0.55);
+  border-radius: 8px;
+  color: #536C99;
+  font-size: 0.875rem;
+  box-shadow: none;
+  background-color: #fff;
+  background-image: url("/assets/images/caret-icon.svg");
+  background-repeat: no-repeat;
+  background-position: right 0.55rem center;
+  background-size: 10px;
+}
+
+/* register form: age input + delete button on one line */
+main .register .register__row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+main .register .register__row .form-control {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+main .register .register__remove {
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  line-height: 0;
+  cursor: pointer;
+}
+
+main .register .register__remove img {
+  display: block;
+  height: 2.5rem;
+  width: auto;
+}
+
+main .register .register__remove:hover {
+  opacity: 0.85;
+}

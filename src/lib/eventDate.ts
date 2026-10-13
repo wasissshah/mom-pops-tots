@@ -70,3 +70,9 @@ export function formatDuration(start: string, end: string) {
 export function formatDayLabel(isoDate: string) {
   return `${formatWeekdayMonth(isoDate).weekday}, ${formatMonthShort(isoDate)} ${Number(isoDate.slice(8, 10))}`;
 }
+
+// "15:00" -> "3:00pm"
+export const formatTimeShort = (time24: string) => noZero(time24).replace(" ", "").toLowerCase();
+
+// "2026-12-04" -> "Friday, 4 December"
+export const formatDayHeading = (isoDate: string) => formatLongDate(isoDate).replace(/ \d{4}$/, "");

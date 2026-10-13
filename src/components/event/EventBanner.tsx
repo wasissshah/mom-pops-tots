@@ -16,7 +16,9 @@ function renderTitle(title: string) {
 }
 
 // Banner filled from one event. sm = smaller banner without the bottom bar (detail page)
-export default function EventBanner({ event, sm }: { event: EventItem; sm?: boolean }) {
+type BannerEvent = Omit<EventItem, "next_date"> & { next_date: string | null };
+
+export default function EventBanner({ event, sm }: { event: BannerEvent; sm?: boolean }) {
   // next_date can be null (e.g. an event that has already ended), so fall back to the first session date
   const first = event.dates[0]?.date ?? event.next_date ?? "";
   const range = first ? formatDayRange(event.dates, first) : "";

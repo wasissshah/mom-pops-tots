@@ -6,17 +6,19 @@ import { cities as staticCities, drawerNavLinks, mainNavLinks } from "@/data/nav
 import { getCities } from "@/api/cities";
 import { getLanguages } from "@/api/languages";
 import { useApi } from "@/hooks/useApi";
+import { setLang, useLang } from "@/lib/locale";
 import DropdownSkeleton from "@/components/skeletons/DropdownSkeleton";
 
 export default function SiteHeader() {
   const [city, setCity] = useState("Muscat");
-  const { data: cityData, loading: citiesLoading } = useApi(getCities, "Cities");
-  const { data: languageData, loading: languagesLoading } = useApi(getLanguages, "Languages");
+  const { data: cityData, loading: citiesLoading } = useApi(getCities, "Cities", { localized: false });
+  const { data: languageData, loading: languagesLoading } = useApi(getLanguages, "Languages", { localized: false });
 
   // API lists when loaded; on failure (error is logged by useApi) fall back to the static lists
   const cities = cityData?.length ? cityData.map((c) => c.name) : staticCities;
-  const [lang, setLang] = useState("EN");
-  const languages = languageData?.length ? languageData.map((l) => l.code.toUpperCase()) : ["EN", "AR"];
+  const lang = useLang(); // global choice, shared by every page and API call (src/lib/locale.ts)
+  const languages = languageData?.length ? languageData.map((l) => l.code) : ["en", "ar"];
+  const currentLang = (lang ?? "en").toUpperCase();
 
   return (
     <>
@@ -98,7 +100,7 @@ export default function SiteHeader() {
                 <img src="/assets/images/cycle-icon.svg" alt="" width={19} height={22} />
               </button>
               <div className="dropdown divider-start d-none d-md-block">
-                <button className="icon-btn dropdown-toggle dropdown-toggle-brand" type="button" data-bs-toggle="dropdown" aria-expanded="false">{lang}</button>
+                <button className="icon-btn dropdown-toggle dropdown-toggle-brand" type="button" data-bs-toggle="dropdown" aria-expanded="false">{currentLang}</button>
                   <ul className="dropdown-menu dropdown-menu-brand dropdown-menu-end">
                     {languagesLoading ? <DropdownSkeleton rows={3} /> : languages.map((l) => (
                       <li key={l}>
@@ -110,7 +112,7 @@ export default function SiteHeader() {
                             setLang(l);
                           }}
                         >
-                          {l}
+                          {l.toUpperCase()}
                         </a>
                       </li>
                     ))}

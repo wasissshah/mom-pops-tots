@@ -2,6 +2,7 @@
 // One request returns every home section (banners, events, ...). Components pick
 // their own section; requests made at the same time share one network call.
 import { apiGet } from "./client";
+import { getLang } from "@/lib/locale";
 import type { EventItem } from "./events";
 
 type HomeParams = { city?: number; lang?: string };
@@ -53,7 +54,7 @@ type HomeResponse = { data: { sections: HomeSection[]; ads?: HomeAd[] } };
 const inFlight = new Map<string, Promise<HomeResponse>>();
 
 function getHome(params?: HomeParams): Promise<HomeResponse> {
-  const key = JSON.stringify(params ?? {});
+  const key = JSON.stringify(params ?? {}) + (getLang() ?? ""); // a language change must not reuse the old request
   let request = inFlight.get(key);
   if (!request) {
     request = apiGet<HomeResponse>("/api/v1/home", params);

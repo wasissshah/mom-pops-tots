@@ -1,7 +1,7 @@
 import type { EventDetail } from "@/api/eventDetail";
 
 export default function AboutEvent({ event }: { event: EventDetail }) {
-  const text = event.description || event.content || event.about || event.excerpt || "";
+  const text = event.description || event.excerpt || "";
   const paragraphs = text.split(/\n+/).map((p) => p.trim()).filter(Boolean);
   return (
     <section className="event-detail__block">
