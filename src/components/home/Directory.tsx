@@ -41,7 +41,7 @@ export default function Directory() {
                 <img className="business-card__logo" src="/assets/images/ad-logo.png" alt="" />
                 <h3 className="business-card__name">{biz.name}</h3>
                 <p className={`business-card__category category--${biz.categoryColor}`}>{biz.category}</p>
-                <p className="business-card__location">Oman<br />Muscat</p>
+                <p className="business-card__location">Oman<br /><span className={`location--${biz.categoryColor}`}>Muscat</span></p>
                 <div className="business-card__links">
                   <a className="social-pebble social-pebble--blue" href="#" aria-label="Website"><img src="/assets/images/icon-globe.svg" alt="" width={20} height={20} /></a>
                   <a className="social-pebble social-pebble--instagram" href="#" aria-label="Instagram"><img src="/assets/images/instagram.svg" alt="" width={20} height={20} /></a>

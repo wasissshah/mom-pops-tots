@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, type SelectHTMLAttributes } from "react";
+import { useEffect, useRef, useState, type SelectHTMLAttributes } from "react";
+import Skeleton from "@/components/ui/Skeleton";
 
 type Select2Props = SelectHTMLAttributes<HTMLSelectElement> & {
   dropdownCssClass?: string;
@@ -18,6 +19,7 @@ export default function Select2({
   ...rest
 }: Select2Props) {
   const ref = useRef<HTMLSelectElement>(null);
+  const [ready, setReady] = useState(false);
   const onValueChangeRef = useRef(onValueChange);
 
   useEffect(() => {
@@ -55,6 +57,7 @@ export default function Select2({
         dropdownCssClass,
       });
       $el.on("change.mptValue", (e: { target: HTMLSelectElement }) => onValueChangeRef.current?.(e.target.value));
+      setReady(true);
     })();
 
     return () => {
@@ -66,9 +69,14 @@ export default function Select2({
     };
   }, [dropdownCssClass, className]);
 
+  // Until select2 has replaced the native <select> (it loads asynchronously), show a skeleton of the
+  // same size so the browser's own arrow never flashes next to the styled one.
   return (
-    <select ref={ref} className={className} {...rest}>
-      {children}
-    </select>
+    <>
+      {!ready && <Skeleton width="190px" height="40px" radius="1rem" />}
+      <select ref={ref} className={className} {...rest} style={ready ? rest.style : { ...rest.style, display: "none" }}>
+        {children}
+      </select>
+    </>
   );
 }

@@ -47,6 +47,7 @@ main .events .thumbnails.thumbnails--grid {
   column-gap: 16px;
   row-gap: 0;
   align-items: start;
+  gap: 20px 16px;
 }
 
 main .events .thumbnails.thumbnails--grid > * {
@@ -145,7 +146,6 @@ main .connect .form-select.phone-code {
   border: 1px solid rgba(83, 108, 153, 0.55);
   border-radius: 8px;
   color: #536C99;
-  font-size: 0.875rem;
   box-shadow: none;
   background-color: #fff;
   background-image: url("/assets/images/caret-icon.svg");
@@ -183,4 +183,40 @@ main .register .register__remove img {
 
 main .register .register__remove:hover {
   opacity: 0.85;
+}
+
+/* ---------- Hero: description limited to 3 lines, then truncated ---------- */
+main .hero .hero__text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+/* ---------- Hero cards: title limited to 3 lines, then truncated ---------- */
+main .hero .article-card .article-card__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+/* ---------- Tribe slider: rests inside the container, but slides run across the full screen width ---------- */
+main .tribe {
+  overflow-x: clip; /* nothing sticks out sideways past the screen */
+}
+
+main .tribe .slick-list {
+  overflow: visible; /* slides are not cut at the container edges while sliding */
+}
+
+main .tribe .slick-slide {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+main .tribe .slick-slide.slick-active {
+  opacity: 1; /* only the cards inside the container are shown at rest */
 }

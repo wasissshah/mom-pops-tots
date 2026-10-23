@@ -4,7 +4,7 @@ import DoodleSection from "@/components/ui/DoodleSection";
 import { offers } from "@/data/home";
 
 const settings: Settings = {
-  slidesToShow: 2,
+  slidesToShow: 2.2,
   infinite: false,
   responsive: [{ breakpoint: 992, settings: { slidesToShow: 1, slidesToScroll: 1 } }],
 };
@@ -38,7 +38,7 @@ export default function Offers() {
                   <img className="offer__logo" src="/assets/images/ad-logo.png" alt="" />
                   <h3 className="offer__name">{offer.name}</h3>
                   <p className="offer__deal">{offer.deal}</p>
-                  <a className="btn btn-primary" href="#">Reveal discount code</a>
+                  <a className="btn btn-primary" href="#"><img src="/assets/images/discount.svg" alt=""/>Click to <span>reveal discount code</span></a>
                 </div>
               </div>
             </div>

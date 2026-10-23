@@ -3,7 +3,8 @@ import SiteFooter from "@/components/layout/SiteFooter";
 import FeaturedBanner from "@/components/event/FeaturedBanner";
 import FeaturedEvents from "@/components/event/FeaturedEvents";
 import EventCalendar from "@/components/event/EventCalendar";
-import TribeSection from "@/components/home/TribeSection";
+import TribeSection from "@/components/event/TribeSection";
+import ActivitiesSection from "@/components/event/ActivitiesSection";
 import WhyEvents from "@/components/event/WhyEvents";
 import CtaBanners from "@/components/event/CtaBanners";
 import Advertising from "@/components/home/Advertising";
@@ -26,7 +27,7 @@ export default function EventPage() {
           showMeta
         />
         <WhyEvents />
-        <TribeSection
+        <ActivitiesSection
           eyebrow="Explore More"
           title="Family Activities"
           items={activityTribeItems}

@@ -8,7 +8,7 @@ export default function Knowledge() {
       <div className="container">
         <div className="row align-items-center g-4">
           <div className="text-center text-lg-start col-lg-5">
-            <img className="knowledge__logo" src="/assets/images/logo.jpg" alt="Moms Pops Tots" />
+            <img className="knowledge__logo" src="/assets/images/logo-left.png" alt="Moms Pops Tots" />
             <span className="section-eyebrow d-block mb-3">Knowledge &amp; Growth Zone</span>
             <p className="knowledge__text">
               The <strong>Knowledge &amp; Growth Zone</strong> is your resource for trusted, expert-backed information

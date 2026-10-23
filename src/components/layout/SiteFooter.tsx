@@ -40,7 +40,7 @@ export default function SiteFooter() {
               <h5 className="footer-title">Get valuable updates &amp; insights</h5>
               <div className="footer-newsletter__field">
                 <SafeInput className="form-control" type="email" placeholder="Your email here" aria-label="Email address" />
-                <button type="submit" aria-label="Subscribe"><img src="/assets/images/arrow-line.svg" alt="" /></button>
+                <button type="submit" aria-label="Subscribe"><img src="/assets/images/arrow-line-dark.svg" alt="" /></button>
               </div>
               <p className="footer-newsletter__note">
                 By signing up to receive emails, you agree to our <a href="#">Privacy Policy.</a> We treat your

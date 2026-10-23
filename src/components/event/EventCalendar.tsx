@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
+import DoodleSection from "@/components/ui/DoodleSection";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { type DateClickArg } from "@fullcalendar/interaction";
@@ -96,81 +97,90 @@ function CalendarView({ groups, legend }: { groups: Group[]; legend: LegendItem[
   }
 
   return (
-    <>
-      <div className="col-lg-6 p-0">
-        <div className="calendar__wrapper">
-          <div className="calendar__fc">
-            <FullCalendar
-              ref={calendarRef}
-              plugins={[dayGridPlugin, interactionPlugin]}
-              initialView="dayGridMonth"
-              initialDate={selectedKey}
-              firstDay={1}
-              height="auto"
-              showNonCurrentDates={false}
-              fixedWeekCount={false}
-              headerToolbar={{ left: "title", right: "prev,next" }}
-              dayHeaderFormat={{ weekday: "long" }}
-              dayCellClassNames={(arg) => (dateKey(arg.date) === selectedKey ? ["is-selected"] : [])}
-              dayCellContent={(arg: DayCellContentArg) => {
-                const dots = dotsByDay.get(dateKey(arg.date));
-                return (
-                  <>
-                    {arg.dayNumberText}
-                    {dots && (
-                      <span className="calendar__dots">
+    <DoodleSection className="event-calendar-wrapper">
+      <img className="doodle event-calendar-wrapper__doodle event-calendar-wrapper__doodle--globe" src="/assets/images/globe-pink.svg" alt="" />
+      <img className="doodle event-calendar-wrapper__doodle event-calendar-wrapper__doodle--star" src="/assets/images/star.svg" alt="" />
+      <div className="row">
+        <div className="col-lg-6 p-0">
+          <div className="calendar__wrapper">
+            <div className="calendar__fc">
+              <FullCalendar
+                  ref={calendarRef}
+                  plugins={[dayGridPlugin, interactionPlugin]}
+                  initialView="dayGridMonth"
+                  initialDate={selectedKey}
+                  firstDay={1}
+                  height="auto"
+                  showNonCurrentDates={false}
+                  fixedWeekCount={false}
+                  headerToolbar={{left: "title", right: "prev,next"}}
+                  dayHeaderFormat={{weekday: "long"}}
+                  dayCellClassNames={(arg) => (dateKey(arg.date) === selectedKey ? ["is-selected"] : [])}
+                  dayCellContent={(arg: DayCellContentArg) => {
+                    const dots = dotsByDay.get(dateKey(arg.date));
+                    return (
+                        <>
+                          {arg.dayNumberText}
+                          {dots && (
+                              <span className="calendar__dots">
                         {dots.map((color) => (
-                          <i className={`calendar__dot calendar__dot--${color}`} key={color} />
+                            <i className={`calendar__dot calendar__dot--${color}`} key={color}/>
                         ))}
                       </span>
-                    )}
-                  </>
-                );
-              }}
-              dateClick={(info: DateClickArg) => {
-                const key = dateKey(info.date);
-                if (dotsByDay.has(key)) jumpTo(key);
-              }}
-            />
-          </div>
-          <ul className="calendar__legend">
-            {legend.map((item) => (
-              <li key={item.label}>
-                <i className={`calendar__dot calendar__dot--${item.color}`} /> {item.label}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="col-lg-6 p-0">
-        <div className="calendar__panel">
-          <div className="calendar__list" ref={listRef} onScroll={onScroll}>
-            {groups.length === 0 && <h3>No upcoming events</h3>}
-            {groups.map((group) => (
-              <div
-                key={group.key}
-                ref={(el) => {
-                  if (el) groupRefs.current.set(group.key, el);
-                  else groupRefs.current.delete(group.key);
-                }}
-              >
-                <h3>{formatLongDate(group.key)}</h3>
-                {group.items.map((event, i) => (
-                  <Link className="calendar-event" href={detailHref(event.id)} key={`${event.id}-${i}`}>
-                    <div className="calendar-event__thumb"><img src={event.img} alt="" /><span className="tag">Event</span></div>
-                    <div className="calendar-event__body">
-                      <span className="calendar-event__time">{event.time}</span>
-                      <h4>{event.title}</h4>
-                      <p><svg><use href="#i-pin" /></svg> {event.place}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            ))}
+                          )}
+                        </>
+                    );
+                  }}
+                  dateClick={(info: DateClickArg) => {
+                    const key = dateKey(info.date);
+                    if (dotsByDay.has(key)) jumpTo(key);
+                  }}
+              />
+            </div>
+            <ul className="calendar__legend">
+              {legend.map((item) => (
+                  <li key={item.label}>
+                    <i className={`calendar__dot calendar__dot--${item.color}`}/> {item.label}
+                  </li>
+              ))}
+            </ul>
           </div>
         </div>
+        <div className="col-lg-6 p-0">
+          <div className="calendar__panel">
+            <div className="calendar__list" ref={listRef} onScroll={onScroll}>
+              {groups.length === 0 && <h3>No upcoming events</h3>}
+              {groups.map((group) => (
+                  <div
+                      key={group.key}
+                      ref={(el) => {
+                        if (el) groupRefs.current.set(group.key, el);
+                        else groupRefs.current.delete(group.key);
+                      }}
+                  >
+                    <h3>{formatLongDate(group.key)}</h3>
+                    {group.items.map((event, i) => (
+                        <Link className="calendar-event" href={detailHref(event.id)} key={`${event.id}-${i}`}>
+                          <div className="calendar-event__thumb"><img src={event.img} alt=""/><span
+                              className="tag">Event</span></div>
+                          <div className="calendar-event__body">
+                            <span className="calendar-event__time">{event.time}</span>
+                            <h4>{event.title}</h4>
+                            <p>
+                              <svg>
+                                <use href="#i-pin"/>
+                              </svg>
+                              {event.place}</p>
+                          </div>
+                        </Link>
+                    ))}
+                  </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
-    </>
+    </DoodleSection>
   );
 }
 

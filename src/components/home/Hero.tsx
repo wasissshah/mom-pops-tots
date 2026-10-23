@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import SlickSlider from "react-slick";
 import type { Settings } from "react-slick";
 import type { ReactNode } from "react";
@@ -19,12 +19,35 @@ type Slide = {
   showCards: boolean;
 };
 
-// Highlight the last word of the API title, like the static design ("be <span>Inspired</span>")
+// Like the static design: two lines (break before the last two words) with the last word highlighted
+// ("Stay Informed and <br>be <span>Inspired</span>").
+// If the backend title already contains <br>, those breaks are used instead of the automatic one.
+const BR = /<br\s*\/?>|&lt;br\s*\/?&gt;|\r?\n/i; // real <br>, HTML-escaped <br>, or a plain new line
+
 function renderTitle(title: string): ReactNode {
-  const words = title.trim().split(" ");
+  if (BR.test(title.trim())) {
+    const lines = title.trim().split(new RegExp(BR.source, "gi")).map((l) => l.trim()).filter(Boolean);
+    const lastLine = lines[lines.length - 1].split(/\s+/);
+    const lastWord = lastLine.pop();
+    return lines.map((line, i) =>
+      i < lines.length - 1 ? (
+        <Fragment key={i}>{line}<br /></Fragment>
+      ) : (
+        <Fragment key={i}>{lastLine.length ? `${lastLine.join(" ")} ` : ""}<span>{lastWord}</span></Fragment>
+      ),
+    );
+  }
+
+  const words = title.trim().split(/\s+/);
   if (words.length < 2) return title;
   const last = words.pop();
-  return [words.join(" ") + " ", <span key="sp">{last}</span>];
+  const head = words.length > 1 ? words.slice(0, -1).join(" ") : "";
+  const second = words.length > 1 ? words[words.length - 1] : words[0];
+  return [
+    head && <Fragment key="head">{head}<br /></Fragment>,
+    `${second} `,
+    <span key="sp">{last}</span>,
+  ];
 }
 
 function bannerToSlide(banner: HomeBanner, i: number): Slide {
@@ -74,7 +97,7 @@ export default function Hero() {
           {slides.map((slide, i) => (
             <div key={i}>
             <div
-              className={`hero__slide${slide.video ? " hero__slide--video" : ""}`}
+              className={`hero__slide${slide.video ? " hero__slide--video" : ""} hero__slide__${i+1}`}
               style={{ backgroundImage: `url('${slide.image}')` }}
             >
               {slide.video && (
@@ -98,8 +121,8 @@ export default function Hero() {
                         <div
                           className={
                             j === 0
-                              ? "col-md-6 col-lg-5 offset-lg-1 col-xxl-4 offset-xxl-2 mb-2 mb-md-0"
-                              : "col-md-6 col-lg-5 col-xxl-4"
+                              ? "col-md-6 col-lg-4 offset-lg-2 col-xxl-4 offset-xxl-2 mb-2 mb-md-0"
+                              : "col-md-6 col-lg-4 col-xxl-4"
                           }
                           key={j}
                         >
@@ -116,7 +139,7 @@ export default function Hero() {
                   </div>
                 )}
                 <div className="text-center bottom-btn-area">
-                  <button className="btn btn-primary" type="button">View all articles</button>
+                  <button className="btn btn-primary" type="button">{['View all articles', 'View All Podcasts', 'Attend Event'][i]}</button>
                 </div>
               </div>
             </div>
@@ -143,7 +166,7 @@ export default function Hero() {
           </ul>
         </div>
         <button
-          className={`hero__timer${paused ? " is-paused" : ""}`}
+          className={`hero__timer is-running${paused ? " is-paused" : ""}`}
           type="button"
           aria-label={paused ? "Play slideshow" : "Pause slideshow"}
           onClick={() => setPaused((p) => !p)}
@@ -152,7 +175,7 @@ export default function Hero() {
             <circle className="hero__timer-track" cx="10" cy="10" r="9" />
             <circle
               key={tick}
-              className="hero__timer-progress is-running"
+              className="hero__timer-progress"
               cx="10"
               cy="10"
               r="9"

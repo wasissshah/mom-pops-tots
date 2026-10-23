@@ -26,7 +26,7 @@ export default function Magazine() {
         </div>
 
         <p className="magazine__label">Featured articles</p>
-        <div className="row g-4">
+        <div className="row g-4 mb-5 pb-4">
           {magazineFeatured.map((item, i) => (
             <div className={i === 1 ? "d-none d-lg-flex col-lg-6" : "col-lg-6"} key={i}>
               <article className="magazine__featured">
@@ -42,7 +42,6 @@ export default function Magazine() {
             </div>
           ))}
         </div>
-
         <p className="magazine__label">More articles</p>
         <CardsCarousel
           settings={settings}

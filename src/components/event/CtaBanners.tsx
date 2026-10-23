@@ -1,10 +1,12 @@
 "use client";
 
 import SafeInput from "@/components/ui/SafeInput";
+import DoodleSection from "@/components/ui/DoodleSection";
 
 export default function CtaBanners() {
   return (
-    <section className="cta">
+    <DoodleSection className="cta">
+      <img className="doodle cta__doodle cta__doodle--moon" src="/assets/images/moon.svg" alt="" />
       <div className="container">
         <div className="cta-banner cta-banner--green">
           <div className="cta-banner__copy">
@@ -22,9 +24,9 @@ export default function CtaBanners() {
             <p>Speak to our team for more information.</p>
           </div>
           <a className="btn btn-primary" href="#">Become a partner</a>
-          <img className="cta-banner__img" src="/assets/images/img2.jpg" alt="" />
+          <img className="cta-banner__img" src="/assets/images/cycle.png" alt="" />
         </div>
       </div>
-    </section>
+    </DoodleSection>
   );
 }

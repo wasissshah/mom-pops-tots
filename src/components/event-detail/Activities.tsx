@@ -1,5 +1,6 @@
 import type { EventDetail } from "@/api/eventDetail";
 import { formatSession } from "@/lib/eventDate";
+import DoodleSection from "@/components/ui/DoodleSection";
 
 // Activities and their slots come from `event.activities` (one slot per session).
 export default function Activities({ event }: { event: EventDetail }) {
@@ -7,7 +8,8 @@ export default function Activities({ event }: { event: EventDetail }) {
   if (activities.length === 0) return null;
 
   return (
-    <section className="event-detail__block">
+    <DoodleSection className="event-detail__block">
+      <img className="doodle community__doodle community__doodle--jellyfish" src="/assets/images/jellyfish.svg" alt="" />
       <div className="text-center"><h2 className="section-title section-title--center">Activities</h2></div>
       {activities.map((activity, i) => (
         <div key={activity.id}>
@@ -40,6 +42,6 @@ export default function Activities({ event }: { event: EventDetail }) {
           {i < activities.length - 1 && <hr className="divider-gradient" />}
         </div>
       ))}
-    </section>
+    </DoodleSection>
   );
 }

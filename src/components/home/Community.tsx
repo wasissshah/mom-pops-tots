@@ -77,8 +77,8 @@ export default function Community() {
                 <p className="tribe-card__members"><svg><use href="#i-users" /></svg> 1,240 members</p>
                 <div className="tribe-card__actions">
                   <div>
-                    <a className="social-pebble social-pebble--whatsapp" href="#" aria-label="WhatsApp"><img src="/assets/images/whatsapp.svg" alt="" width={20} height={20} /></a>
-                    <a className="social-pebble social-pebble--facebook" href="#" aria-label="Facebook"><img src="/assets/images/facebook.svg" alt="" width={20} height={20} /></a>
+                    <a className="social-pebble social-pebble--whatsapp" href="#" aria-label="WhatsApp"><img src="/assets/images/whatsapp2.svg" alt="" width={20} height={20} /></a>
+                    <a className="social-pebble social-pebble--facebook" href="#" aria-label="Facebook"><img src="/assets/images/facebook2.svg" alt="" width={20} height={20} /></a>
                   </div>
                   <a className={`btn btn-primary btn-primary--${card.variant === "green" ? "green" : card.variant === "blue" ? "blue" : card.variant === "yellow" ? "yellow" : ""}`} href="#">Join this tribe</a>
                 </div>

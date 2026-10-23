@@ -6,9 +6,10 @@
     "predev": "powershell -NoProfile -ExecutionPolicy Bypass -File kill-dev.ps1",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node server.js",
     "lint": "eslint"
   },
+  "homepage": "https://uat.momspopstots.com/",
   "dependencies": {
     "@fullcalendar/core": "^6.1.21",
     "@fullcalendar/daygrid": "^6.1.21",

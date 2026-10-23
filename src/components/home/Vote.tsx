@@ -81,7 +81,7 @@ export default function Vote() {
               <div className={`vote-card vote-card--${card.variant}`}>
                 <div className={`pebble-img pebble-img--${card.variant} vote-card__img`}><img src={card.img} alt="" /></div>
                 <div className="vote-card__body">
-                  <span className="tag vote-card__featured"><svg><use href="#i-star" /></svg> Featured</span>
+                  <span className="tag vote-card__featured"><img src="/assets/images/star-fill.svg" alt="" width={12} height={12}/> Featured</span>
                   <h3 className="vote-card__title">{card.title}</h3>
                   <p className="vote-card__text">{card.text}</p>
                   <a

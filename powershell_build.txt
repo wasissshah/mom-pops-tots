@@ -1,0 +1,26 @@
+npm run build
+Remove-Item -Recurse -Force deploy -ErrorAction SilentlyContinue
+Copy-Item -Recurse .next\standalone deploy
+Copy-Item -Recurse .next\static deploy\.next\static
+Copy-Item -Recurse public deploy\public
+Set-Content deploy\app.js "require('./server.js');"
+
+
+Then
+
+
+mkdir -p /home/momspopstots/public_html/uat.momspopstots.com/tmp
+touch /home/momspopstots/public_html/uat.momspopstots.com/tmp/restart.txt
+
+
+Then
+
+
+ps -u momspopstots -o pid,etime,cmd | grep -i "uat.momspopstots.com"
+
+
+Then
+
+
+ls -la /home/momspopstots/public_html/uat.momspopstots.com/.next/static/chunks | head
+tail -50 /home/momspopstots/public_html/uat.momspopstots.com/stderr.log

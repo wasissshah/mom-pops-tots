@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import DoodleSection from "@/components/ui/DoodleSection";
 import Select2 from "@/components/ui/Select2";
 import Skeleton from "@/components/ui/Skeleton";
 import CardsSkeleton from "@/components/skeletons/CardsSkeleton";
@@ -76,7 +77,9 @@ export default function FeaturedEvents() {
   }
 
   return (
-    <section className="events">
+    <DoodleSection className="events">
+      <img className="doodle events__doodle events__doodle--clock" src="/assets/images/clock.svg" alt="" />
+      <img className="doodle events__doodle events__doodle--bulb" src="/assets/images/bulb.svg" alt="" />
       <div className="container">
         <div className="text-center">
           <span className="section-eyebrow d-block">Upcoming Events</span>
@@ -85,8 +88,8 @@ export default function FeaturedEvents() {
         <div className="events__filters">
           {loading ? (
             <>
-              <Skeleton width="14rem" height="3rem" radius="1rem" />
-              <Skeleton width="14rem" height="3rem" radius="1rem" />
+              <Skeleton width="190px" height="40px" radius="1rem" />
+              <Skeleton width="190px" height="40px" radius="1rem" />
             </>
           ) : (
             <>
@@ -170,6 +173,6 @@ export default function FeaturedEvents() {
           </div>
         )}
       </div>
-    </section>
+    </DoodleSection>
   );
 }

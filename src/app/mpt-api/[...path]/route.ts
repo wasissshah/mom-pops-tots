@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 
 // Server-side proxy: the browser calls /mpt-api/..., this route calls the real API
 // with the Bearer token (same as Postman). No CORS, and the token never reaches the browser.
-const UPSTREAM = process.env.API_URL ?? "https://momspopstots.com/mpt-admin";
+const UPSTREAM = process.env.API_URL ?? "https://uatadmin.momspopstots.com";
 const TOKEN = process.env.API_TOKEN ?? "";
 
 type Ctx = { params: Promise<{ path: string[] }> };

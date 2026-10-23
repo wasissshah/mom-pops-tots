@@ -15,6 +15,7 @@ export default function SocialFeed() {
             <a className="social-pebble social-pebble--pink" href="#" aria-label="Instagram"><img src="/assets/images/instagram.svg" alt="" width={20} height={20} /></a>
             <a className="social-pebble social-pebble--blue" href="#" aria-label="Facebook"><img src="/assets/images/facebook.svg" alt="" width={20} height={20} /></a>
             <a className="social-pebble social-pebble--green" href="#" aria-label="WhatsApp"><img src="/assets/images/whatsapp.svg" alt="" width={20} height={20} /></a>
+            <a className="social-pebble social-pebble--yellow" href="#" aria-label="Linkedin"><img src="/assets/images/linkedin.svg" alt="" width={20} height={20} /></a>
           </div>
         </div>
 

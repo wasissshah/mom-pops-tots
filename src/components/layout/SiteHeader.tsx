@@ -36,7 +36,7 @@ export default function SiteHeader() {
               >
                 <img src="/assets/images/menu-icon.svg" alt="" width={36} height={36} />
               </button>
-              <div className="header-city d-none d-lg-block">
+              <div className="header-city d-none d-md-block">
                 <span className="field-label" id="cityLabel">Explore your city</span>
                 <div className="dropdown select-brand">
                   <button
@@ -73,7 +73,7 @@ export default function SiteHeader() {
             </Link>
 
             <div className="header-right">
-              <div className="header-actions d-none d-xl-flex gap-3">
+              <div className="header-actions d-none d-md-flex gap-3">
                 <div className="dropdown">
                   <button className="btn btn-brand-outline dropdown-toggle dropdown-toggle-brand" type="button" data-bs-toggle="dropdown" aria-expanded="false">Register</button>
                   <ul className="dropdown-menu dropdown-menu-brand">
@@ -122,7 +122,7 @@ export default function SiteHeader() {
           </div>
         </div>
 
-        <nav className="header-bottom d-none d-lg-block" aria-label="Main navigation">
+        <nav className="header-bottom d-none d-md-block" aria-label="Main navigation">
           <div className="container">
             <ul className="nav justify-content-center">
               {mainNavLinks.map((link) => (
